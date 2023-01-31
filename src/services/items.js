@@ -10,3 +10,13 @@ export async function createListItem(id, description) {
 
   return checkError(response);
 }
+
+export async function toggleListItem({ id, complete }) {
+  const response = await client
+    .from('todos')
+    .update({ complete: !complete })
+    .match({ id })
+    .single();
+
+  return checkError(response);
+}
