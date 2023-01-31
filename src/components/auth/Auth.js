@@ -1,13 +1,25 @@
 import React from 'react';
 import { useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, Redirect, useParams } from 'react-router-dom';
 import { useUser } from '../../context/UserContext.js';
+import { authUser } from '../../services/auth.js';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPass] = useState('');
   const { type } = useParams();
   const { user, setUser } = useUser();
+  if (user) {
+    return <Redirect to="/items" />;
+  }
+  const submitAuth = async () => {
+    try {
+      const newUser = await authUser(email, password, type);
+      setUser(newUser);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div className="auth box">
@@ -45,6 +57,11 @@ export default function Auth() {
             />
           </div>
         </div>
+      </div>
+      <div className="control">
+        <button onClick={submitAuth} className="button">
+          Submit
+        </button>
       </div>
     </div>
   );
