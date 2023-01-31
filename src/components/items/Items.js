@@ -13,8 +13,10 @@ export default function Items() {
   return (
     <div className="itemContainer">
       <div>
-        <ItemsList />
+        <h2>Here are you To-dos</h2>
+        <h3>Stop slacking!</h3>
         <ItemForm />
+        <ItemsList />
       </div>
     </div>
   );
